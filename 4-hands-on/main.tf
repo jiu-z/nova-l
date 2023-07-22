@@ -24,14 +24,6 @@ resource "google_project_iam_member" "custom_roles_members" {
   member  = "serviceAccount:${google_service_account.cloud_run.email}"
 }
 
-resource "google_service_account" "pub_sub" {
-  display_name = var.account_id_pub_sub # pub_sub開発用サービスアカウント
-  account_id   = var.account_id_pub_sub
-  depends_on = [
-    google_project_iam_custom_role.custom_roles,
-  ]
-}
-
 # Google Cloud Service Account　作成
 resource "google_service_account" "cloud_run" {
   display_name = var.account_id_cloud_run # cloud_run開発用サービスアカウント
@@ -40,3 +32,30 @@ resource "google_service_account" "cloud_run" {
     google_project_iam_custom_role.custom_roles,
   ]
 }
+
+
+resource "google_cloud_run_service" "backend" {
+  name     = "cloudrun-srv"
+  location = "us-central1"
+
+  template {
+    spec {
+      containers {
+        image = "us-central1-docker.pkg.dev/pacific-ethos-388512/node-hello-world/node-hello-world:2f97e2027ebd094084abd616b246bd73669f80e8"
+      }
+      container_concurrency = 4
+      timeout_seconds       = 3600
+      # Specify a custom service account for the Cloud Run service
+      # service_account_name = "848188805483-compute@developer.gserviceaccount.com"
+      service_account_name = "cloud-run-custom-dev@pacific-ethos-388512.iam.gserviceaccount.com"
+      
+    }
+  }
+
+  traffic {
+    percent         = 100
+    latest_revision = true
+  }
+}
+
+
