@@ -39,9 +39,9 @@ resource "google_project_iam_member" "custom_roles_members" {
 
 # Create google_project_iam_member resources to bind service accounts with roles
 resource "google_project_iam_member" "custom_parts_binding" {
-  for_each = { for item in local.predefined_parts : item.account_id => item }
+  for_each = { for idex ,role in local.predefined_parts : idex => role }
 
   project = var.project_id
   role    = each.value.role_id
-  member  = "serviceAccount:${google_service_account.service_accounts[each.key].email}"
+  member  = "serviceAccount:${google_service_account.service_accounts[each.value.account_id].email}"
 }
