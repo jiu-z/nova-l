@@ -1,10 +1,9 @@
 remote_state {
   backend = "gcs"
   config = {
-    bucket = "calabs-bucket-1690699541"
+    bucket = "pacific-ethos-388512-tf-state"
     prefix = "${local.env_vars.environment}/${path_relative_to_include()}/terraform.tfstate"
-    credentials = "/home/project/.sa_key"
-    project = "cal-1639-c60ea2f0a7f5"
+    project = "pacific-ethos-388512"
     location = "us-central1"
   }
 }
@@ -18,14 +17,13 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "3.5.0"
+      version = "4.75.0"
     }
   }
   backend "gcs" {}
 }
 provider "google" {
-  credentials = "/home/project/.sa_key"
-  project = "cal-1639-c60ea2f0a7f5"
+  project = "pacific-ethos-388512"
   region = "us-central1"
 }
   EOF
