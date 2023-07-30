@@ -11,12 +11,6 @@ In this lab step, you will modify your environment configurations in  order to d
 1. In the terminal, enter the following command to create a separate **Production** subdirectory within the project:
 
 ```
-
-```
-
-[Copy code](https://cloudacademy.com/lab/managing-gcp-environments-with-terragrunt/modifying-environment-configurations-with-terragrunt/?context_id=4773&context_resource=lp#)
-
-```
 cp -p -a ./development/. ./production/ \
 && sed -i 's/development/production/g' ./production/env_vars.yaml \
 && sed -i 's+10.0.0.0/24+10.1.0.0/24+g' ./production/env_vars.yaml \
@@ -29,8 +23,6 @@ Each `sed` command that follows replaces a configuration value in the resulting 
 
 ![alt](https://assets.cloudacademy.com/bakery/media/uploads/content_engine/image-20220113182530-7-e54a3e12-8fd8-4409-a900-33ac2e06a6e0.png)
 
- 
-
 2. Double-click on the **production/env_vars.yaml** file to open it in the editor:
 
 ![alt](https://assets.cloudacademy.com/bakery/media/uploads/content_engine/image-20220113182725-8-89d458a9-9ab0-4742-b68f-d4ebffbab2cf.png)
@@ -39,15 +31,7 @@ Notice the `environment` value is now set to `production`. The `ip_cidr_range` r
 
 With the differing values in this file, Terragrunt will spin up an  entirely separate set of resources in a different GCP zone and IP  range. 
 
- 
-
 3. In the terminal, run the following command, followed by *y* at the prompt to observe the deployment of the two separate environments at the same time:
-
-```
-
-```
-
-[Copy code](https://cloudacademy.com/lab/managing-gcp-environments-with-terragrunt/modifying-environment-configurations-with-terragrunt/?context_id=4773&context_resource=lp#)
 
 ```
 terragrunt run-all apply
@@ -59,18 +43,11 @@ terragrunt run-all apply
 
 The **network** and **gce** resources in the **development** environment will show no changes. 
 
-![alt](https://assets.cloudacademy.com/bakery/media/uploads/content_engine/image-20220117173455-1-a73ac1bb-7cb9-4cb0-a04f-d5c71cc01fe8.png)
-Meanwhile, the **production network**, **subnetwork**, and **labserver** resources are created successfully in their environment. The screenshot above indicates the successful **gce** module creation.
+![alt](https://assets.cloudacademy.com/bakery/media/uploads/content_engine/image-20220117173455-1-a73ac1bb-7cb9-4cb0-a04f-d5c71cc01fe8.png)Meanwhile, the **production network**, **subnetwork**, and **labserver** resources are created successfully in their environment. The screenshot above indicates the successful **gce** module creation.
 
 You now have two logically separated GCP environments that access the same module definitions, but can be uniquely configured in their  respective **env_vars.yaml** files.
 
 Going forward, the following command can be used to apply changes to each environment separately:
-
-```
-
-```
-
-[Copy code](https://cloudacademy.com/lab/managing-gcp-environments-with-terragrunt/modifying-environment-configurations-with-terragrunt/?context_id=4773&context_resource=lp#)
 
 ```
 terragrunt run-all apply --terragrunt-working-dir production

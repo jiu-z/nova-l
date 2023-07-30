@@ -31,12 +31,6 @@ Lastly, the environment's **terragrunt.hcl** file is where you will configure th
 3. Paste the following code into the **development/terragrunt.hcl** file:
 
 ```
-
-```
-
-[Copy code](https://cloudacademy.com/lab/managing-gcp-environments-with-terragrunt/deploying-gcp-resources-using-remote-terraform-modules/?context_id=4773&context_resource=lp#)
-
-```
 remote_state {
   backend = "gcs"
   config = {
@@ -91,12 +85,6 @@ The first occurrence of this `locals.env_vars` object in action is in the `remot
 6. Paste the following code into the **development/env_vars.yaml** file:
 
 ```
-
-```
-
-[Copy code](https://cloudacademy.com/lab/managing-gcp-environments-with-terragrunt/deploying-gcp-resources-using-remote-terraform-modules/?context_id=4773&context_resource=lp#)
-
-```
 # Environment
 environment: "development"
  
@@ -116,15 +104,14 @@ The YAML code you pasted in will be used as input variables for your resource mo
 
 To understand how these will be used in the resource modules, you  must first understand how those modules will be imported into this  project.
 
- 
-
 7. Double-click on the **development/gce/terragrunt.hcl** file:
 
-[![alt](https://assets.cloudacademy.com/bakery/media/uploads/content_engine/image-20220113175055-3-f2742fe2-a575-47d6-88c7-837a78d54c1b.png)](https://cloudacademy.com/lab/centralizing-remote-state-with-terragrunt-in-gcp/)
+![alt](https://assets.cloudacademy.com/bakery/media/uploads/content_engine/image-20220113175055-3-f2742fe2-a575-47d6-88c7-837a78d54c1b.png)
 
 At the top of the file, you will see the `terraform` block and `source` property. The value for this property points at a pre-configured, stable release stored in a public GitHub repository. `v0.0.2` is the release tag, and the `/gce` path ahead of this tag indicates which module within that repository to use. 
 
-These modules are stored in a public repository named [cloudacademy / terraform-gcp-calabmodules](https://github.com/cloudacademy/terraform-gcp-calabmodules).
+These modules are stored in a public repository named [cloudacademy / terraform-gcp-calabmodules](https://github.com/cloudacademy/terraform-gcp-calabmodules)
+
 
 Feel free to navigate to the repository and explore the two modules defined within. If you jump to the **/gce/main.tf** file in this repository, you will find the module definition:
 
@@ -139,12 +126,6 @@ Now that you understand the responsibilities of each file, it's time to deploy t
  
 
 8. In the terminal, enter the following command to change directories and deploy your resources:
-
-```
-
-```
-
-[Copy code](https://cloudacademy.com/lab/managing-gcp-environments-with-terragrunt/deploying-gcp-resources-using-remote-terraform-modules/?context_id=4773&context_resource=lp#)
 
 ```
 cd terragrunt-gcp \
