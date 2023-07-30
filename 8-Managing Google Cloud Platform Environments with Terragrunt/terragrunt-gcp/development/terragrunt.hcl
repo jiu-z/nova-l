@@ -1,10 +1,10 @@
 remote_state {
   backend = "gcs"
   config = {
-    bucket = "calabs-bucket-1690694189"
+    bucket = "calabs-bucket-1690699541"
     prefix = "${local.env_vars.environment}/${path_relative_to_include()}/terraform.tfstate"
     credentials = "/home/project/.sa_key"
-    project = "cal-2806-d253926d684d"
+    project = "cal-1639-c60ea2f0a7f5"
     location = "us-central1"
   }
 }
@@ -25,7 +25,7 @@ terraform {
 }
 provider "google" {
   credentials = "/home/project/.sa_key"
-  project = "cal-2806-d253926d684d"
+  project = "cal-1639-c60ea2f0a7f5"
   region = "us-central1"
 }
   EOF

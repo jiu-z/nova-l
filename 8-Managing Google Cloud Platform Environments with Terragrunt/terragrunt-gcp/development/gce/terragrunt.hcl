@@ -1,5 +1,4 @@
 # Use remote GCE module
-# https://github.com/cloudacademy/terraform-gcp-calabmodules
 terraform {
   source = "git::github.com/cloudacademy/terraform-gcp-calabmodules.git//gce?ref=v0.0.2"
 }

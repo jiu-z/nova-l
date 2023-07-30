@@ -1,0 +1,13 @@
+# Environment
+environment: "production"
+ 
+# Network Module
+ip_cidr_range: "10.1.0.0/24"
+region: "us-central1"
+ 
+# GCE Module
+server_count: 1
+server_name: "labserver"
+machine_type: "f1-micro"
+zone: "us-central1-b"
+image: "debian-cloud/debian-11"
