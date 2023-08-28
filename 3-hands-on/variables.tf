@@ -34,3 +34,7 @@ variable "policy_name" {
     description = "policy_name"
     type = string
 }
+variable "certificate_name" {
+    description = "certificate_name"
+    type = string
+}

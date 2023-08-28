@@ -159,46 +159,46 @@ resource "google_compute_security_policy" "default_policy" {
 }
 
 # ## LB
-# data "google_compute_ssl_certificate" "cainz_com" {
-#   name = var.certificate_name
-# }
+data "google_compute_ssl_certificate" "cainz_com" {
+  name = var.certificate_name
+}
 
-# resource "google_compute_ssl_policy" "cainzapp_custom_policy" {
-#   name            = "cainzapp-custom-policy"
-#   profile         = "MODERN"
-#   min_tls_version = "TLS_1_2"
-# }
+resource "google_compute_ssl_policy" "cainzapp_custom_policy" {
+  name            = "cainzapp-custom-policy"
+  profile         = "MODERN"
+  min_tls_version = "TLS_1_2"
+}
 
-# resource "google_compute_global_address" "default" {
-#   name = var.lb_name
-# }
+resource "google_compute_global_address" "default" {
+  name = var.lb_name
+}
 
-# resource "google_compute_target_https_proxy" "default" {
-#   name             = var.lb_name
-#   url_map          = google_compute_url_map.default.id
-#   ssl_certificates = [data.google_compute_ssl_certificate.cainz_com.certificate_id]
-#   ssl_policy       = google_compute_ssl_policy.cainzapp_custom_policy.name
-# }
+resource "google_compute_target_https_proxy" "default" {
+  name             = var.lb_name
+  url_map          = google_compute_url_map.default.id
+  ssl_certificates = [data.google_compute_ssl_certificate.cainz_com.certificate_id]
+  ssl_policy       = google_compute_ssl_policy.cainzapp_custom_policy.name
+}
 
-# resource "google_compute_global_forwarding_rule" "default" {
-#   name                  = var.lb_name
-#   target                = google_compute_target_https_proxy.default.self_link
-#   ip_address            = google_compute_global_address.default.address
-#   port_range            = "443"
-#   load_balancing_scheme = "EXTERNAL_MANAGED"
-# }
+resource "google_compute_global_forwarding_rule" "default" {
+  name                  = var.lb_name
+  target                = google_compute_target_https_proxy.default.self_link
+  ip_address            = google_compute_global_address.default.address
+  port_range            = "443"
+  load_balancing_scheme = "EXTERNAL_MANAGED"
+}
 
-# resource "google_compute_url_map" "default" {
-#   name            = var.lb_name
-#   default_service = var.backend_id
+resource "google_compute_url_map" "default" {
+  name            = var.lb_name
+  default_service = google_compute_backend_service.webserver.id
 
-#   path_matcher {
-#     name = "redirect-to-https"
-#     default_url_redirect {
-#       https_redirect         = true
-#       redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
-#       strip_query            = false
-#     }
-#   }
-# }
+  path_matcher {
+    name = "redirect-to-https"
+    default_url_redirect {
+      https_redirect         = true
+      redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
+      strip_query            = false
+    }
+  }
+}
 
