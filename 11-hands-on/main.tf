@@ -2,15 +2,17 @@ terraform {
   required_providers {
     google = {
       source = "hashicorp/google"
-      version = "3.5.0"
+      version = "4.69.1"
     }
   }
 }
+
 provider "google" {
-  credentials = "${file("../.sa_key")}"
-  project = "cal-2956-3e70f5b1263b"
-  region = "us-central1"
+  project = "era-ax"
+  region  = "us-central1"
+  zone    = "us-central1-c"
 }
+
 resource "google_storage_bucket" "file-store" {
   name     = "file-store-RANDOM_NUMBERS" # Replace with random numbers
   location = "US"
