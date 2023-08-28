@@ -14,7 +14,8 @@ In this lab step, you will explore declaring variables and defining their values
 
 The empty file will open in the IDE editor.
 
- 
+git pull && terraform init && terraform apply -auto-approve
+git add . && git commit -m update && git push
 
 2. Paste the following block into the **variables.tf** file:
 
