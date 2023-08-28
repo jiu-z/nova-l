@@ -1,5 +1,5 @@
 region = "us-central1"
-subnetwork_range = "10.0.0.0/16"
+project_id = "era-ax"
 auto_create_subnetworks = "false"
 machine_type = "f1-micro"
 zone = "us-central1-a"
