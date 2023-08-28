@@ -19,7 +19,7 @@ resource "google_compute_network" "ca-network" {
 
 ##Front End
 # git pull && terraform init && terraform apply -auto-approve
-# git add . && git commit -m update && git push
+# git add . && git commite -m update && git push
 # resource "google_project_service" "project" {
 #   project            = var.project_id
 #   service            = "run.googleapis.com"
@@ -37,11 +37,11 @@ resource "google_cloud_run_service" "webserver" {
       }
     }
   }
-  metadata {
-    annotations = {
-      "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
-    }
-  }
+  # metadata {
+  #   annotations = {
+  #     "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
+  #   }
+  # }
 
   # lifecycle {
   #   ignore_changes = [
