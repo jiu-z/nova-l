@@ -38,3 +38,7 @@ variable "certificate_name" {
     description = "certificate_name"
     type = string
 }
+variable "lb_name" {
+    description = "lb_name"
+    type = string
+}
