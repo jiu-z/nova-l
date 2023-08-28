@@ -98,7 +98,7 @@ resource "google_cloud_run_service" "default" {
     ]
   }
 
-  autogenerate_revision_name = true
+  # autogenerate_revision_name = true
 }
 
 data "google_iam_policy" "noauthc" {
