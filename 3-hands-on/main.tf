@@ -85,7 +85,7 @@ resource "google_compute_backend_service" "webserver" {
   name                  = google_cloud_run_service.webserver.name
   protocol              = "HTTP"
   load_balancing_scheme = "EXTERNAL_MANAGED"
-  security_policy       = google_compute_security_policy.security_policy.self_link
+  security_policy       = google_compute_security_policy.default_policy.self_link
   backend {
     group = google_compute_region_network_endpoint_group.node_group.id
   }
