@@ -84,11 +84,11 @@ resource "google_cloud_run_service" "default" {
       }
     }
   }
-  metadata {
-    annotations = {
-      "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
-    }
-  }
+  # metadata {
+  #   annotations = {
+  #     "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
+  #   }
+  # }
   #   lifecycle {
   #   ignore_changes = [
   #     metadata.0.annotations["run.googleapis.com/client-name"],
