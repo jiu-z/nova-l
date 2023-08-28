@@ -85,7 +85,7 @@ resource "google_compute_region_network_endpoint_group" "node_group" {
 #   name                  = google_cloud_run_service.webserver.name
 #   protocol              = "HTTP"
 #   load_balancing_scheme = "EXTERNAL_MANAGED"
-#   security_policy       = var.security_policy
+#   security_policy       = google_compute_security_policy.security_policy.self_link
 #   backend {
 #     group = google_compute_region_network_endpoint_group.node_group.id
 #   }
@@ -96,66 +96,66 @@ resource "google_compute_region_network_endpoint_group" "node_group" {
 # }
 
 ##Security
-# resource "google_compute_security_policy" "default_policy" {
-#   name = var.policy_name
+resource "google_compute_security_policy" "default_policy" {
+  name = var.policy_name
 
-#   rule {
-#     action   = "allow"
-#     priority = "1000"
-#     match {
-#       versioned_expr = "SRC_IPS_V1"
-#       config {
-#         src_ip_ranges = [
-#           "124.39.30.241",
-#           "133.201.11.225",
-#           "121.109.156.28",
-#           "114.155.123.10",
-#           "122.26.96.8",
-#           "118.7.70.128",
-#           "59.7.248.104",
-#           "118.240.180.6"
-#         ]
-#       }
-#     }
-#     description = "Next-Gen-Dev team :)"
-#   }
+  rule {
+    action   = "allow"
+    priority = "1000"
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = [
+          "124.39.30.241",
+          "133.201.11.225",
+          "121.109.156.28",
+          "114.155.123.10",
+          "122.26.96.8",
+          "118.7.70.128",
+          "59.7.248.104",
+          "118.240.180.6"
+        ]
+      }
+    }
+    description = "Next-Gen-Dev team :)"
+  }
 
-#   rule {
-#     action   = "allow"
-#     priority = "1001"
-#     match {
-#       versioned_expr = "SRC_IPS_V1"
-#       config {
-#         src_ip_ranges = ["222.230.189.170/31", "222.230.189.172/31"]
-#       }
-#     }
-#     description = "CAINZ VPN"
-#   }
+  rule {
+    action   = "allow"
+    priority = "1001"
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = ["222.230.189.170/31", "222.230.189.172/31"]
+      }
+    }
+    description = "CAINZ VPN"
+  }
 
-#   rule {
-#     action   = "allow"
-#     priority = "1002"
-#     match {
-#       versioned_expr = "SRC_IPS_V1"
-#       config {
-#         src_ip_ranges = ["210.149.129.66/31", "210.149.129.113/32", "210.149.129.114/31", "210.149.129.116/32"]
-#       }
-#     }
-#     description = "CAINZ IP VPN Backup"
-#   }
+  rule {
+    action   = "allow"
+    priority = "1002"
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = ["210.149.129.66/31", "210.149.129.113/32", "210.149.129.114/31", "210.149.129.116/32"]
+      }
+    }
+    description = "CAINZ IP VPN Backup"
+  }
 
-#   rule {
-#     action   = "deny(403)"
-#     priority = "2147483647"
-#     match {
-#       versioned_expr = "SRC_IPS_V1"
-#       config {
-#         src_ip_ranges = ["*"]
-#       }
-#     }
-#     description = "Default deny"
-#   }
-# }
+  rule {
+    action   = "deny(403)"
+    priority = "2147483647"
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = ["*"]
+      }
+    }
+    description = "Default deny"
+  }
+}
 
 # ## LB
 # data "google_compute_ssl_certificate" "cainz_com" {

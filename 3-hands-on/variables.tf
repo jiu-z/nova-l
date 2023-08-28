@@ -30,3 +30,7 @@ variable "container_image" {
     description = "container_image"
     type = string
 }
+variable "policy_name" {
+    description = "policy_name"
+    type = string
+}
