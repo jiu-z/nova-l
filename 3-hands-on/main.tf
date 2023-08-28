@@ -37,11 +37,11 @@ resource "google_cloud_run_service" "webserver" {
       }
     }
   }
-  # metadata {
-  #   annotations = {
-  #     "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
-  #   }
-  # }
+  metadata {
+    annotations = {
+      "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
+    }
+  }
 
   lifecycle {
     ignore_changes = [
