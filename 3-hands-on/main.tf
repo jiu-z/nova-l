@@ -26,50 +26,50 @@ resource "google_compute_network" "ca-network" {
 #   disable_on_destroy = false
 # }
 
-# resource "google_cloud_run_service" "webserver" {
-#   name     = var.service_name
-#   location = var.region
+resource "google_cloud_run_service" "webserver" {
+  name     = var.service_name
+  location = var.region
 
-#   template {
-#     spec {
-#       containers {
-#         image = var.container_image
-#       }
-#     }
-#   }
-#   metadata {
-#     annotations = {
-#       "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
-#     }
-#   }
+  template {
+    spec {
+      containers {
+        image = var.container_image
+      }
+    }
+  }
+  # metadata {
+  #   annotations = {
+  #     "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
+  #   }
+  # }
 
-#   lifecycle {
-#     ignore_changes = [
-#       metadata.0.annotations["run.googleapis.com/client-name"],
-#       metadata.0.annotations["run.googleapis.com/client-version"],
-#       template[0].spec[0].containers[0].image,
-#       template[0].spec[0].containers[0].env
-#     ]
-#   }
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["run.googleapis.com/client-name"],
+      metadata.0.annotations["run.googleapis.com/client-version"],
+      template[0].spec[0].containers[0].image,
+      template[0].spec[0].containers[0].env
+    ]
+  }
 
-#   autogenerate_revision_name = true
-# }
+  autogenerate_revision_name = true
+}
 
-# data "google_iam_policy" "noauth" {
-#   binding {
-#     role = "roles/run.invoker"
-#     members = [
-#       "allUsers",
-#     ]
-#   }
-# }
+data "google_iam_policy" "noauth" {
+  binding {
+    role = "roles/run.invoker"
+    members = [
+      "allUsers",
+    ]
+  }
+}
 
-# resource "google_cloud_run_service_iam_policy" "noauth" {
-#   location    = google_cloud_run_service.webserver.location
-#   project     = google_cloud_run_service.webserver.project
-#   service     = google_cloud_run_service.webserver.name
-#   policy_data = data.google_iam_policy.noauth.policy_data
-# }
+resource "google_cloud_run_service_iam_policy" "noauth" {
+  location    = google_cloud_run_service.webserver.location
+  project     = google_cloud_run_service.webserver.project
+  service     = google_cloud_run_service.webserver.name
+  policy_data = data.google_iam_policy.noauth.policy_data
+}
 
 # resource "google_cloud_run_service" "default" {
 #   name     = "cloudrun-srv"
