@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  project = "pacific-ethos-388512"
+  project = "era-ax"
   region  = "us-central1"
   zone    = "us-central1-c"
 }
