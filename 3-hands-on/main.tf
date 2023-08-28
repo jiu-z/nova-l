@@ -43,14 +43,14 @@ resource "google_cloud_run_service" "webserver" {
     }
   }
 
-  lifecycle {
-    ignore_changes = [
-      metadata.0.annotations["run.googleapis.com/client-name"],
-      metadata.0.annotations["run.googleapis.com/client-version"],
-      template[0].spec[0].containers[0].image,
-      template[0].spec[0].containers[0].env
-    ]
-  }
+  # lifecycle {
+  #   ignore_changes = [
+  #     metadata.0.annotations["run.googleapis.com/client-name"],
+  #     metadata.0.annotations["run.googleapis.com/client-version"],
+  #     template[0].spec[0].containers[0].image,
+  #     template[0].spec[0].containers[0].env
+  #   ]
+  # }
 
   autogenerate_revision_name = true
 }
