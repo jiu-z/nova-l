@@ -79,7 +79,7 @@ resource "google_cloud_run_service" "default" {
     spec {
       containers {
         # image = "us-docker.pkg.dev/cloudrun/container/hello"
-        image = "us-central1-docker.pkg.dev/era-ax/infra/init"
+        image = "us-central1-docker.pkg.dev/era-ax/infra/init:latest"
       }
     }
   }
