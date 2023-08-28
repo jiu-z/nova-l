@@ -22,3 +22,11 @@ variable "zone" {
     description = "Deployment Zone"
     type = string
 }
+variable "service_name" {
+    description = "service_name"
+    type = string
+}
+variable "container_image" {
+    description = "container_image"
+    type = string
+}
