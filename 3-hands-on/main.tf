@@ -24,38 +24,38 @@ resource "google_project_service" "project" {
   disable_on_destroy = false
 }
 
-# resource "google_cloud_run_service" "webserver" {
-#   name     = var.service_name
-#   location = var.region
+resource "google_cloud_run_service" "webserver" {
+  name     = var.service_name
+  location = var.region
 
-#   template {
-#     spec {
-#       containers {
-#         image = var.container_image
-#       }
-#     }
-#   }
-#   metadata {
-#     annotations = {
-#       "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
-#     }
-#   }
+  template {
+    spec {
+      containers {
+        image = var.container_image
+      }
+    }
+  }
+  metadata {
+    annotations = {
+      "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
+    }
+  }
 
-#   lifecycle {
-#     ignore_changes = [
-#       metadata.0.annotations["run.googleapis.com/client-name"],
-#       metadata.0.annotations["run.googleapis.com/client-version"],
-#       template[0].spec[0].containers[0].image,
-#       template[0].spec[0].containers[0].env
-#     ]
-#   }
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["run.googleapis.com/client-name"],
+      metadata.0.annotations["run.googleapis.com/client-version"],
+      template[0].spec[0].containers[0].image,
+      template[0].spec[0].containers[0].env
+    ]
+  }
 
-#   depends_on = [
-#     google_project_service.project
-#   ]
+  depends_on = [
+    google_project_service.project
+  ]
 
-#   autogenerate_revision_name = true
-# }
+  autogenerate_revision_name = true
+}
 
 # data "google_iam_policy" "noauth" {
 #   binding {
