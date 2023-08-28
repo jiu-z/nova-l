@@ -19,10 +19,10 @@ resource "google_compute_subnetwork" "ca-subnetwork" {
   network       = google_compute_network.ca-network.id
 }
 
-resource "google_compute_network" "ca-network" {
-  name                    = "ca-network"
-  auto_create_subnetworks = var.auto_create_subnetworks
-}
+# resource "google_compute_network" "ca-network" {
+#   name                    = "ca-network"
+#   auto_create_subnetworks = var.auto_create_subnetworks
+# }
 
 # resource "google_compute_instance" "instance" {
 #   name         = "ca-lab"
