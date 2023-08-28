@@ -24,17 +24,17 @@ resource "google_compute_network" "ca-network" {
   auto_create_subnetworks = var.auto_create_subnetworks
 }
 
-resource "google_compute_instance" "instance" {
-  name         = "ca-lab"
-  machine_type = var.machine_type
-  zone         = var.zone
-  boot_disk {
-    initialize_params {
-      image = var.image
-    }
-  }
-  network_interface {
-    subnetwork = google_compute_subnetwork.ca-subnetwork.id
-    access_config {}
-  }
-}
+# resource "google_compute_instance" "instance" {
+#   name         = "ca-lab"
+#   machine_type = var.machine_type
+#   zone         = var.zone
+#   boot_disk {
+#     initialize_params {
+#       image = var.image
+#     }
+#   }
+#   network_interface {
+#     subnetwork = google_compute_subnetwork.ca-subnetwork.id
+#     access_config {}
+#   }
+# }
