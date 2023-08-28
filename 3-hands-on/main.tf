@@ -18,40 +18,42 @@ resource "google_compute_network" "ca-network" {
 }
 
 ##Front End
+# git pull && terraform init && terraform apply -auto-approve
+# git add . && git commite -m update && git push
 # resource "google_project_service" "project" {
 #   project            = var.project_id
 #   service            = "run.googleapis.com"
 #   disable_on_destroy = false
 # }
 
-# resource "google_cloud_run_service" "webserver" {
-#   name     = var.service_name
-#   location = var.region
+resource "google_cloud_run_service" "webserver" {
+  name     = var.service_name
+  location = var.region
 
-#   template {
-#     spec {
-#       containers {
-#         image = var.container_image
-#       }
-#     }
-#   }
-#   metadata {
-#     annotations = {
-#       "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
-#     }
-#   }
+  template {
+    spec {
+      containers {
+        image = var.container_image
+      }
+    }
+  }
+  # metadata {
+  #   annotations = {
+  #     "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
+  #   }
+  # }
 
-#   lifecycle {
-#     ignore_changes = [
-#       metadata.0.annotations["run.googleapis.com/client-name"],
-#       metadata.0.annotations["run.googleapis.com/client-version"],
-#       template[0].spec[0].containers[0].image,
-#       template[0].spec[0].containers[0].env
-#     ]
-#   }
+  # lifecycle {
+  #   ignore_changes = [
+  #     metadata.0.annotations["run.googleapis.com/client-name"],
+  #     metadata.0.annotations["run.googleapis.com/client-version"],
+  #     template[0].spec[0].containers[0].image,
+  #     template[0].spec[0].containers[0].env
+  #   ]
+  # }
 
-#   autogenerate_revision_name = true
-# }
+  autogenerate_revision_name = true
+}
 
 # data "google_iam_policy" "noauth" {
 #   binding {
