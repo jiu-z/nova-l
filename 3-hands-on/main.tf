@@ -188,28 +188,9 @@ resource "google_compute_global_forwarding_rule" "default" {
   load_balancing_scheme = "EXTERNAL_MANAGED"
 }
 
-resource "google_compute_url_map" "default" {
-  name            = var.lb_name
-  default_service = google_compute_backend_service.webserver.id
-
-  path_matcher {
-    name = "redirect-to-https"
-    default_url_redirect {
-      https_redirect         = true
-      redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
-      strip_query            = false
-    }
-  }
-}
-
 # resource "google_compute_url_map" "default" {
 #   name            = var.lb_name
 #   default_service = google_compute_backend_service.webserver.id
-
-#   host_rule {
-#     hosts        = ["*"]
-#     path_matcher = "redirect-to-https"
-#   }
 
 #   path_matcher {
 #     name = "redirect-to-https"
@@ -218,14 +199,34 @@ resource "google_compute_url_map" "default" {
 #       redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
 #       strip_query            = false
 #     }
-
-#     path_rule {
-#       paths   = ["/home"]
-#       service = google_compute_backend_service.webserver.id
-#     }
-#     path_rule {
-#       paths   = ["/login"]
-#       service = google_compute_backend_service.webserver.id
-#     }
 #   }
 # }
+
+resource "google_compute_url_map" "default" {
+  name            = var.lb_name
+  default_service = google_compute_backend_service.webserver.id
+
+  host_rule {
+    hosts        = ["*"]
+    path_matcher = "default"
+  }
+
+  path_matcher {
+    name = "default"
+
+    route {
+      prefix_matcher = "/"
+      service        = google_compute_backend_service.webserver.id
+    }
+
+    route {
+      prefix_matcher = "/test"
+      service        = google_compute_backend_service.webserver.id
+    }
+
+    route {
+      prefix_matcher = "/gateway"
+      service        = google_compute_backend_service.webserver.id
+    }
+  }
+}
