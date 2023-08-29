@@ -205,10 +205,22 @@ resource "google_compute_global_forwarding_rule" "default" {
 resource "google_compute_url_map" "default" {
   name            = var.lb_name
   default_service = google_compute_backend_service.webserver.id
-
+  path_matcher {
+    name = "redirect-to-https"
+    default_url_redirect {
+      https_redirect         = true
+      redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
+      strip_query            = false
+    }
+  }
   host_rule {
     hosts        = ["*"]
     path_matcher = "mysite"
+  }
+
+  host_rule {
+    hosts        = ["myothersite.com"]
+    path_matcher = "otherpaths"
   }
 
   path_matcher {
@@ -219,5 +231,9 @@ resource "google_compute_url_map" "default" {
       paths   = ["/home"]
       service = google_compute_backend_service.webserver.id
     }
+  }
+  path_matcher {
+    name            = "otherpaths"
+    default_service = google_compute_backend_bucket.static.id
   }
 }
