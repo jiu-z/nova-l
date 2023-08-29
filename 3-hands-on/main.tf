@@ -218,11 +218,6 @@ resource "google_compute_url_map" "default" {
     path_matcher = "mysite"
   }
 
-  host_rule {
-    hosts        = ["*"]
-    path_matcher = "otherpaths"
-  }
-
   path_matcher {
     name            = "mysite"
     default_service = google_compute_backend_service.webserver.id
@@ -232,10 +227,20 @@ resource "google_compute_url_map" "default" {
       service = google_compute_backend_service.webserver.id
     }
   }
+}
+
+resource "google_compute_url_map" "defaults" {
+  name            = var.lb_name
+  default_service = google_compute_backend_service.webserver.id
+  host_rule {
+    hosts        = ["*"]
+    path_matcher = "cc"
+  }
 
   path_matcher {
-    name            = "otherpaths"
+    name            = "cc"
     default_service = google_compute_backend_service.webserver.id
+
     path_rule {
       paths   = ["/work"]
       service = google_compute_backend_service.webserver.id
