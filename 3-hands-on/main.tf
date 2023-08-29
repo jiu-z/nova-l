@@ -156,6 +156,6 @@ resource "google_compute_url_map_path_matcher" "gateway_path_matcher" {
   route_action {
     backend_service = google_compute_backend_service.webserver.id
   }
-}2
+}
 
 
