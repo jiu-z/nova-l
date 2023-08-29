@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "4.69.1"
     }
   }
@@ -9,7 +9,7 @@ terraform {
 
 provider "google" {
   project = "era-ax"
-  region = var.region
+  region  = var.region
 }
 
 resource "google_compute_network" "ca-network" {
@@ -207,37 +207,17 @@ resource "google_compute_url_map" "default" {
   default_service = google_compute_backend_service.webserver.id
 
   host_rule {
-    hosts = ["*"]
-    path_matcher = "allpaths"
+    hosts        = ["*"]
+    path_matcher = "mysite"
   }
 
   path_matcher {
-    name = "allpaths"
+    name            = "mysite"
     default_service = google_compute_backend_service.webserver.id
 
-    route_rules {
-      priority = 1
+    path_rule {
+      paths   = ["/home"]
       service = google_compute_backend_service.webserver.id
-      match_rules {
-        prefix_match = "/gateway"
-        ignore_case = true
-        header_matches {
-          header_name = "abtest"
-          exact_match = "a"
-        }
-      }
-    }
-    route_rules {
-      priority = 2
-      service = google_compute_backend_service.webserver.id
-      match_rules {
-        ignore_case = true
-        prefix_match = "/kk"
-        header_matches {
-          header_name = "abtest"
-          exact_match = "b"
-        }
-      }
     }
   }
 }
