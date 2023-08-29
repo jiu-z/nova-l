@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     google = {
-      source  = "hashicorp/google"
+      source = "hashicorp/google"
       version = "4.69.1"
     }
   }
@@ -9,7 +9,7 @@ terraform {
 
 provider "google" {
   project = "era-ax"
-  region  = var.region
+  region = var.region
 }
 
 resource "google_compute_network" "ca-network" {
@@ -192,11 +192,6 @@ resource "google_compute_url_map" "default" {
   name            = var.lb_name
   default_service = google_compute_backend_service.webserver.id
 
-  host_rule {
-    hosts        = ["*"]
-    path_matcher = "redirect-to-https"
-  }
-
   path_matcher {
     name = "redirect-to-https"
     default_url_redirect {
@@ -204,15 +199,33 @@ resource "google_compute_url_map" "default" {
       redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
       strip_query            = false
     }
-
-    path_rule {
-      paths   = ["/home"]
-      service = google_compute_backend_service.webserver.id
-    }
-    path_rule {
-      paths   = ["/login"]
-      service = google_compute_backend_service.webserver.id
-    }
   }
 }
 
+# resource "google_compute_url_map" "default" {
+#   name            = var.lb_name
+#   default_service = google_compute_backend_service.webserver.id
+
+#   host_rule {
+#     hosts        = ["*"]
+#     path_matcher = "redirect-to-https"
+#   }
+
+#   path_matcher {
+#     name = "redirect-to-https"
+#     default_url_redirect {
+#       https_redirect         = true
+#       redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
+#       strip_query            = false
+#     }
+
+#     path_rule {
+#       paths   = ["/home"]
+#       service = google_compute_backend_service.webserver.id
+#     }
+#     path_rule {
+#       paths   = ["/login"]
+#       service = google_compute_backend_service.webserver.id
+#     }
+#   }
+# }
