@@ -17,6 +17,15 @@ resource "google_compute_network" "ca-network" {
   auto_create_subnetworks = var.auto_create_subnetworks
 }
 
+##Front End
+# git pull && terraform init && terraform apply -auto-approve
+# git add . && git commite -m update && git push
+# resource "google_project_service" "project" {
+#   project            = var.project_id
+#   service            = "run.googleapis.com"
+#   disable_on_destroy = false
+# }
+
 resource "google_cloud_run_service" "webserver" {
   name     = var.service_name
   location = var.region
@@ -99,6 +108,12 @@ resource "google_compute_security_policy" "default_policy" {
         src_ip_ranges = [
           "124.39.30.241",
           "133.201.11.225",
+          "121.109.156.28",
+          "114.155.123.10",
+          "122.26.96.8",
+          "118.7.70.128",
+          "59.7.248.104",
+          "118.240.180.6",
           "133.32.130.12"
         ]
       }
@@ -106,6 +121,41 @@ resource "google_compute_security_policy" "default_policy" {
     description = "Next-Gen-Dev team :)"
   }
 
+  rule {
+    action   = "allow"
+    priority = "1001"
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = ["222.230.189.170/31", "222.230.189.172/31"]
+      }
+    }
+    description = "CAINZ VPN"
+  }
+
+  rule {
+    action   = "allow"
+    priority = "1002"
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = ["210.149.129.66/31", "210.149.129.113/32", "210.149.129.114/31", "210.149.129.116/32"]
+      }
+    }
+    description = "CAINZ IP VPN Backup"
+  }
+
+  rule {
+    action   = "deny(403)"
+    priority = "2147483647"
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = ["*"]
+      }
+    }
+    description = "Default deny"
+  }
 }
 
 # ## LB
@@ -126,7 +176,7 @@ resource "google_compute_global_address" "default" {
 resource "google_compute_target_https_proxy" "default" {
   name             = var.lb_name
   url_map          = google_compute_url_map.default.id
-  ssl_certificates = [data.google1_compute_ssl_certificate.cainz_com.certificate_id]
+  ssl_certificates = [data.google_compute_ssl_certificate.cainz_com.certificate_id]
   ssl_policy       = google_compute_ssl_policy.cainzapp_custom_policy.name
 }
 
@@ -137,29 +187,18 @@ resource "google_compute_global_forwarding_rule" "default" {
   port_range            = "443"
   load_balancing_scheme = "EXTERNAL_MANAGED"
 }
+
 resource "google_compute_url_map" "default" {
   name            = var.lb_name
   default_service = google_compute_backend_service.webserver.id
-}
 
-resource "google_compute_url_map_path_matcher" "user_path_matcher" {
-  name      = "user-path-matcher"
-  url_map   = google_compute_url_map.default.self_link
-  path_rule = "/user/*"
-
-  route_action {
-    backend_service = google_compute_backend_service.webserver.id
+  path_matcher {
+    name = "redirect-to-https"
+    default_url_redirect {
+      https_redirect         = true
+      redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
+      strip_query            = false
+    }
   }
 }
-
-resource "google_compute_url_map_path_matcher" "gateway_path_matcher" {
-  name      = "gateway-path-matcher"
-  url_map   = google_compute_url_map.default.self_link
-  path_rule = "/gateway/*"
-
-  route_action {
-    backend_service = google_compute_backend_service.webserver.id
-  }
-}
-
 
