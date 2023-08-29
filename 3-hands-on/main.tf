@@ -226,6 +226,10 @@ resource "google_compute_url_map" "default" {
       paths   = ["/home"]
       service = google_compute_backend_service.webserver.id
     }
+    path_rule {
+      paths   = ["/work"]
+      service = google_compute_backend_service.webserver.id
+    }
   }
 }
 
