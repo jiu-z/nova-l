@@ -199,6 +199,16 @@ resource "google_compute_url_map" "default" {
       redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
       strip_query            = false
     }
+
+    route {
+      prefix_matcher = "/user"
+      service        = google_compute_backend_service.webserver.id
+    }
+
+    route {
+      prefix_matcher = "/gateway"
+      service        = google_compute_backend_service.webserver.id
+    }
   }
 }
 
