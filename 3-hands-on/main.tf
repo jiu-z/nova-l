@@ -232,8 +232,13 @@ resource "google_compute_url_map" "default" {
       service = google_compute_backend_service.webserver.id
     }
   }
+
   path_matcher {
     name            = "otherpaths"
-    default_service = google_compute_backend_bucket.static.id
+    default_service = google_compute_backend_service.webserver.id
+    path_rule {
+      paths   = ["/work"]
+      service = google_compute_backend_service.webserver.id
+    }
   }
 }
