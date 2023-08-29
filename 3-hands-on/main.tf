@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "4.69.1"
     }
   }
@@ -9,7 +9,7 @@ terraform {
 
 provider "google" {
   project = "era-ax"
-  region = var.region
+  region  = var.region
 }
 
 resource "google_compute_network" "ca-network" {
@@ -188,41 +188,31 @@ resource "google_compute_global_forwarding_rule" "default" {
   load_balancing_scheme = "EXTERNAL_MANAGED"
 }
 
-# resource "google_compute_url_map" "default" {
-#   name            = var.lb_name
-#   default_service = google_compute_backend_service.webserver.id
-
-#   path_matcher {
-#     name = "redirect-to-https"
-#     default_url_redirect {
-#       https_redirect         = true
-#       redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
-#       strip_query            = false
-#     }
-#   }
-# }
-
 resource "google_compute_url_map" "default" {
   name            = var.lb_name
   default_service = google_compute_backend_service.webserver.id
-}
 
-resource "google_compute_url_map_path_matcher" "user_path_matcher" {
-  name      = "user-path-matcher"
-  url_map   = google_compute_url_map.default.self_link
-  path_rule = "/user/*"
+  host_rule {
+    hosts        = ["*"]
+    path_matcher = "redirect-to-https"
+  }
 
-  route_action {
-    backend_service = google_compute_backend_service.webserver.id
+  path_matcher {
+    name = "redirect-to-https"
+    default_url_redirect {
+      https_redirect         = true
+      redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
+      strip_query            = false
+    }
+
+    path_rule {
+      paths   = ["/home"]
+      service = google_compute_backend_service.webserver.id
+    }
+    path_rule {
+      paths   = ["/login"]
+      service = google_compute_backend_service.webserver.id
+    }
   }
 }
 
-resource "google_compute_url_map_path_matcher" "gateway_path_matcher" {
-  name      = "gateway-path-matcher"
-  url_map   = google_compute_url_map.default.self_link
-  path_rule = "/gateway/*"
-
-  route_action {
-    backend_service = google_compute_backend_service.webserver.id
-  }
-}
