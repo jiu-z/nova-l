@@ -138,28 +138,24 @@ resource "google_compute_global_forwarding_rule" "default" {
   load_balancing_scheme = "EXTERNAL_MANAGED"
 }
 
-resource "google_compute_url_map" "default" {
-  name            = var.lb_name
-  default_service = google_compute_backend_service.webserver.id
+resource "google_compute_url_map_path_matcher" "user_path_matcher" {
+  name      = "user-path-matcher"
+  url_map   = google_compute_url_map.default.self_link
+  path_rule = "/user/*"
 
-  path_matcher {
-    name = "user-path-matcher"
-    default_service = google_compute_backend_service.webserver.id
-
-    route {
-      prefix_matcher = "/user"
-      service        = google_compute_backend_service.webserver.id
-    }
-  }
-
-  path_matcher {
-    name = "gateway-path-matcher"
-    default_service = google_compute_backend_service.webserver.id
-
-    route {
-      prefix_matcher = "/gateway"
-      service        = google_compute_backend_service.webserver.id
-    }
+  route_action {
+    backend_service = google_compute_backend_service.webserver.id
   }
 }
+
+resource "google_compute_url_map_path_matcher" "gateway_path_matcher" {
+  name      = "gateway-path-matcher"
+  url_map   = google_compute_url_map.default.self_link
+  path_rule = "/gateway/*"
+
+  route_action {
+    backend_service = google_compute_backend_service.webserver.id
+  }
+}2
+
 
