@@ -207,26 +207,37 @@ resource "google_compute_url_map" "default" {
   default_service = google_compute_backend_service.webserver.id
 
   host_rule {
-    hosts        = ["*"]
-    path_matcher = "default"
+    hosts = ["*"]
+    path_matcher = "allpaths"
   }
 
   path_matcher {
-    name = "default"
+    name = "allpaths"
+    default_service = google_compute_backend_service.webserver.id
 
-    route {
-      prefix_matcher = "/"
-      service        = google_compute_backend_service.webserver.id
+    route_rules {
+      priority = 1
+      service = google_compute_backend_service.webserver.id
+      match_rules {
+        prefix_match = "/gateway"
+        ignore_case = true
+        header_matches {
+          header_name = "abtest"
+          exact_match = "a"
+        }
+      }
     }
-
-    route {
-      prefix_matcher = "/test"
-      service        = google_compute_backend_service.webserver.id
-    }
-
-    route {
-      prefix_matcher = "/gateway"
-      service        = google_compute_backend_service.webserver.id
+    route_rules {
+      priority = 2
+      service = google_compute_backend_service.webserver.id
+      match_rules {
+        ignore_case = true
+        prefix_match = "/kk"
+        header_matches {
+          header_name = "abtest"
+          exact_match = "b"
+        }
+      }
     }
   }
 }
