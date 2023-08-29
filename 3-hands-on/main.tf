@@ -229,21 +229,21 @@ resource "google_compute_url_map" "default" {
   }
 }
 
-resource "google_compute_url_map" "defaults" {
-  name            = var.lb_name
-  default_service = google_compute_backend_service.webserver.id
-  host_rule {
-    hosts        = ["*"]
-    path_matcher = "cc"
-  }
+# resource "google_compute_url_map" "defaults" {
+#   name            = var.lb_name
+#   default_service = google_compute_backend_service.webserver.id
+#   host_rule {
+#     hosts        = ["*"]
+#     path_matcher = "cc"
+#   }
 
-  path_matcher {
-    name            = "cc"
-    default_service = google_compute_backend_service.webserver.id
+#   path_matcher {
+#     name            = "cc"
+#     default_service = google_compute_backend_service.webserver.id
 
-    path_rule {
-      paths   = ["/work"]
-      service = google_compute_backend_service.webserver.id
-    }
-  }
-}
+#     path_rule {
+#       paths   = ["/work"]
+#       service = google_compute_backend_service.webserver.id
+#     }
+#   }
+# }
