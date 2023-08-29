@@ -219,7 +219,7 @@ resource "google_compute_url_map" "default" {
   }
 
   host_rule {
-    hosts        = ["myothersite.com"]
+    hosts        = ["*"]
     path_matcher = "otherpaths"
   }
 
