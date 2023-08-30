@@ -8,13 +8,8 @@ terraform {
 }
 
 provider "google" {
-  project = "era-ax"
+  project = "nova-kk"
   region  = var.region
-}
-
-resource "google_compute_network" "ca-network" {
-  name                    = "ca-network"
-  auto_create_subnetworks = var.auto_create_subnetworks
 }
 
 ##Front End
@@ -188,19 +183,6 @@ resource "google_compute_global_forwarding_rule" "default" {
   load_balancing_scheme = "EXTERNAL_MANAGED"
 }
 
-# resource "google_compute_url_map" "default" {
-#   name            = var.lb_name
-#   default_service = google_compute_backend_service.webserver.id
-
-#   path_matcher {
-#     name = "redirect-to-https"
-#     default_url_redirect {
-#       https_redirect         = true
-#       redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
-#       strip_query            = false
-#     }
-#   }
-# }
 
 resource "google_compute_url_map" "default" {
   name            = var.lb_name
@@ -232,22 +214,3 @@ resource "google_compute_url_map" "default" {
     }
   }
 }
-
-# resource "google_compute_url_map" "defaults" {
-#   name            = var.lb_name
-#   default_service = google_compute_backend_service.webserver.id
-#   host_rule {
-#     hosts        = ["*"]
-#     path_matcher = "cc"
-#   }
-
-#   path_matcher {
-#     name            = "cc"
-#     default_service = google_compute_backend_service.webserver.id
-
-#     path_rule {
-#       paths   = ["/work"]
-#       service = google_compute_backend_service.webserver.id
-#     }
-#   }
-# }
