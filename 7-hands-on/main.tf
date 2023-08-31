@@ -40,29 +40,29 @@ resource "google_project_service" "default" {
 # Enables Firebase services for the new project created above.
 resource "google_firebase_project" "default" {
   provider = google-beta
-  project  = "nova-kk-2"
+  project  = var.project_id
 }
 
 # Creates a Firebase Android App in the new project created above.
 resource "google_firebase_android_app" "default" {
   provider = google-beta
-  project      = "nova-kk-2"
+  project      = var.project_id
   display_name = "My Awesome Android app"
   package_name = "awesome.package.name"
 }
 
 resource "google_firebase_apple_app" "full" {
   provider = google-beta
-  project = "nova-kk-2"
+  project = var.project_id
   display_name = "novakk Full"
-  bundle_id = "apple.app.novakk"
-  app_store_id = "2345662"
-  team_id = "9987654321"
+  bundle_id = "apple.app.full"
+  app_store_id = "2395662"
+  team_id = "9987954321"
 }
 
 resource "google_firebase_project_location" "basic" {
     provider = google-beta
-    project = "nova-kk-2"
+    project = var.project_id
 
     location_id = "asia-northeast1"
 }

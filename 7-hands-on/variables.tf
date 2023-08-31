@@ -1,6 +1,6 @@
 variable "project_id" {
     type = string
-    default = "nova-kk"
+    default = "nova-we"
 }
 variable "region" {
     type = string
