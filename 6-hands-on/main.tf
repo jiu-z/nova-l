@@ -20,22 +20,6 @@ provider "google-beta" {
   user_project_override = false
 }
 
-# Creates a new Google Cloud project.
-# resource "google_project" "default" {
-#   provider   = google-beta.no_user_project_override
-
-#   name       = "Project Display Name"
-#   project_id = "project-id-for-new-project"
-#   # Required for any service that requires the Blaze pricing plan
-#   # (like Firebase Authentication with GCIP)
-#   billing_account = "000000-000000-000000"
-
-#   # Required for the project to display in any list of Firebase projects.
-#   labels = {
-#     "firebase" = "enabled"
-#   }
-# }
-
 # Enables required APIs.
 resource "google_project_service" "default" {
   provider = google-beta.no_user_project_override
