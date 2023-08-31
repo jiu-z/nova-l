@@ -1,40 +1,32 @@
 variable "project_id" {
-    description = "Subnet IP address space"
     type = string
+    default = "nova-kk"
 }
 variable "region" {
-    description = "Deployment Region"
     type = string
-}
-variable "image"{
-    description = "Boot Disk Image"
-    type = string
-}
-variable "machine_type"{
-    description = "GCP Instance Type"
-    type = string
+    default = "us-central1"
 }
 variable "zone" {
-    description = "Deployment Zone"
     type = string
+    default = "us-central1-a"
 }
 variable "service_name" {
-    description = "service_name"
     type = string
+    default = "web"
 }
 variable "container_image" {
-    description = "container_image"
     type = string
+    default = "us-central1-docker.pkg.dev/era-ax/infra/init:latest"
 }
 variable "policy_name" {
-    description = "policy_name"
     type = string
+    default = "web"
 }
 variable "certificate_name" {
-    description = "certificate_name"
     type = string
+    default = "web"
 }
 variable "lb_name" {
-    description = "lb_name"
     type = string
+    default = "web"
 }
