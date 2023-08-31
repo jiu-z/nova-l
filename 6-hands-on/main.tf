@@ -48,5 +48,5 @@ resource "google_firebase_android_app" "default" {
   provider = google-beta
   project      = var.project_id
   display_name = "My Awesome Android app"
-  package_name = "awesome.nova-kk.name"
+  package_name = "awesome.package.name"
 }
