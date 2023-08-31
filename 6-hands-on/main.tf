@@ -64,5 +64,5 @@ resource "google_firebase_project_location" "basic" {
     provider = google-beta
     project = var.project_id
 
-    location_id = "us-central"
+    location_id = "asia-northeast1"
 }
