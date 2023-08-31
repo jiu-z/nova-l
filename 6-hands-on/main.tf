@@ -50,3 +50,12 @@ resource "google_firebase_android_app" "default" {
   display_name = "My Awesome Android app"
   package_name = "awesome.package.name"
 }
+
+resource "google_firebase_apple_app" "full" {
+  provider = google-beta
+  project = var.project_id
+  display_name = "novakk Full"
+  bundle_id = "apple.app.novakk"
+  app_store_id = "2345662"
+  team_id = "9987654321"
+}
