@@ -47,8 +47,8 @@ resource "google_firebase_project" "default" {
 resource "google_firebase_android_app" "default" {
   provider = google-beta
   project      = var.project_id
-  display_name = "My Awesome Android app"
-  package_name = "awesome.package.name"
+  display_name = "My Awesome Android apps"
+  package_name = "awesomes.packages.names"
 }
 
 resource "google_firebase_apple_app" "full" {
