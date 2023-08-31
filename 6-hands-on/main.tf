@@ -59,3 +59,10 @@ resource "google_firebase_apple_app" "full" {
   app_store_id = "2345662"
   team_id = "9987654321"
 }
+
+resource "google_firebase_project_location" "basic" {
+    provider = google-beta
+    project = var.project_id
+
+    location_id = "us-central"
+}
