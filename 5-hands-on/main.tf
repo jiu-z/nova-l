@@ -78,3 +78,27 @@ resource "google_apikeys_key" "android" {
     }
   }
 }
+
+resource "google_firebase_apple_app" "full" {
+  provider = google-beta
+  project = var.project_id
+  display_name = "nova-kk Full"
+  bundle_id = "apple.app.nova-kk"
+  app_store_id = "nova-kk"
+  team_id = "9987654321"
+  api_key_id = google_apikeys_key.apple.uid
+}
+
+resource "google_apikeys_key" "apple" {
+  provider = google-beta
+
+  name         = "api-key-apple"
+  display_name = "nova-kk Full"
+  project = var.project_id
+
+  restrictions {
+    ios_key_restrictions {
+      allowed_bundle_ids = ["apple.app.nova-kk"]
+    }
+  }
+}
