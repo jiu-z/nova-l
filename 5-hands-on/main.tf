@@ -52,25 +52,25 @@ resource "google_firebase_android_app" "default" {
   package_name = "android.nova-kk.app"
   sha1_hashes = ["2145bdf698b8715039bd0e83f2069bed435ac21c"]
   sha256_hashes = ["2145bdf698b8715039bd0e83f2069bed435ac21ca1b2c3d4e5f6123456789abc"]
-  # api_key_id = google_apikeys_key.android.uid
+  api_key_id = google_apikeys_key.android.uid
 }
 
-# resource "google_apikeys_key" "android" {
-#   provider = google-beta
+resource "google_apikeys_key" "android" {
+  provider = google-beta
 
-#   name         = "api-key"
-#   display_name = "Display Name"
-#   project = var.project_id
+  name         = "api-key"
+  display_name = "Display Name"
+  project = var.project_id
 
-#   restrictions {
-#     android_key_restrictions {
-#       allowed_applications {
-#         package_name     = "android.nova-kk.app"
-#         sha1_fingerprint = "2145bdf698b8715039bd0e83f2069bed435ac21c"
-#       }
-#     }
-#   }
-# }
+  restrictions {
+    android_key_restrictions {
+      allowed_applications {
+        package_name     = "android.nova-kk.app"
+        sha1_fingerprint = "2145bdf698b8715039bd0e83f2069bed435ac21c"
+      }
+    }
+  }
+}
 
 # resource "google_firebase_apple_app" "full" {
 #   provider = google-beta
