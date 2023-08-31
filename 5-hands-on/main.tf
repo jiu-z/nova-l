@@ -70,7 +70,7 @@ resource "google_firebase_android_app" "default" {
 #       }
 #     }
 #   }
-}
+# }
 
 # resource "google_firebase_apple_app" "full" {
 #   provider = google-beta
