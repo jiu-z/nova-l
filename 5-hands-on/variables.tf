@@ -1,7 +1,3 @@
-variable "auto_create_subnetworks" {
-    description = "Automatically create subnetworks"
-    type = string
-}
 variable "project_id" {
     description = "Subnet IP address space"
     type = string
