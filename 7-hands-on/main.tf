@@ -60,9 +60,9 @@ resource "google_firebase_apple_app" "full" {
   team_id = "9987954321"
 }
 
-resource "google_firebase_project_location" "basic" {
-    provider = google-beta
-    project = var.project_id
+# resource "google_firebase_project_location" "basic" {
+#     provider = google-beta
+#     project = var.project_id
 
-    location_id = "asia-northeast1"
-}
+#     location_id = "asia-northeast1"
+# }
