@@ -40,7 +40,7 @@ resource "google_project_service" "default" {
 # Enables Firebase services for the new project created above.
 resource "google_firebase_project" "default" {
   provider = google-beta
-  project  = var.project_id
+  project  = "var.project_id"
 }
 
 # Creates a Firebase Android App in the new project created above.
@@ -64,5 +64,5 @@ resource "google_firebase_project_location" "basic" {
     provider = google-beta
     project = var.project_id
 
-    location_id = "us-central"
+    location_id = "asia-northeast1"
 }
