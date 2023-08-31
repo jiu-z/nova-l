@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "google" {
-  project = "nova-kk"
+  project = var.project_id
   region  = var.region
 }
 

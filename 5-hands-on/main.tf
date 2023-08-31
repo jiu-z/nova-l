@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "google" {
-  project = "nova-kk"
+  project = var.project_id
   region  = var.region
 }
 
@@ -27,4 +27,27 @@ resource "google_compute_security_policy" "default_policy" {
     }
     description = "Default deny"
   }
+}
+
+resource "google_project" "default" {
+  provider = google-beta
+
+  project_id = var.project_id
+  name       = var.project_id
+
+  labels = {
+    "firebase" = "enabled"
+  }
+}
+
+resource "google_firebase_project" "default" {
+  provider = google-beta
+  project  = google_project.default.project_id
+}
+
+resource "google_firebase_project_location" "basic" {
+    provider = google-beta
+    project = google_firebase_project.default.project
+
+    location_id = "us-central"
 }
