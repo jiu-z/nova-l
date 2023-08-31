@@ -35,7 +35,7 @@ data "google_project" "google_project" {
 
 resource "google_firebase_project" "default" {
   provider = google-beta
-  project  = google_project.google_project.project_id
+  project  = data.google_project.google_project.project_id
 }
 
 resource "google_firebase_project_location" "basic" {
