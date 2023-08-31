@@ -29,20 +29,13 @@ resource "google_compute_security_policy" "default_policy" {
   }
 }
 
-# resource "google_project" "default" {
-#   provider = google-beta
-
-#   project_id = var.project_id
-#   name       = var.project_id
-
-#   labels = {
-#     "firebase" = "enabled"
-#   }
-# }
+data "google_project" "google_project" {
+  project_id=var.project_id
+}
 
 resource "google_firebase_project" "default" {
   provider = google-beta
-  project  = google_project.default.project_id
+  project  = google_project.google_project.project_id
 }
 
 resource "google_firebase_project_location" "basic" {
